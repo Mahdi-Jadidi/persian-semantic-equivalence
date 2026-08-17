@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "persian-semantic-equivalence"
+version = "1.0.0"
+description = "Formal/informal Persian semantic equivalence with Word2Vec and ParsBERT"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["gensim>=4.3", "numpy>=1.26", "openpyxl>=3.1", "pandas>=2.2", "scikit-learn>=1.4", "torch>=2.2", "tqdm>=4.66", "transformers>=4.44"]
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+[project.scripts]
+persian-equivalence = "persian_semantic_equivalence.cli:main"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.ruff]
+line-length = 140
+[tool.pytest.ini_options]
+testpaths = ["tests"]
