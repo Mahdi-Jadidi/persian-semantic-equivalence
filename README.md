@@ -1,22 +1,29 @@
 # Semantic Equivalence in Formal and Informal Persian
 
-A complete Persian semantic-equivalence pipeline covering text normalization, corpus statistics, subword fragmentation and token inflation, Word2Vec sentence similarity, ParsBERT contextual embeddings, supervised pair construction, transformer fine-tuning, evaluation, and reusable inference.
+A Persian NLP project for measuring whether formal and colloquial sentences preserve the same meaning. It moves from language-aware normalization and corpus analysis to static embeddings, contextual ParsBERT embeddings, and a supervised semantic-equivalence classifier.
 
-## Commands
+## Why this is difficult
+
+Informal Persian changes spelling, token boundaries, morphology, and punctuation without necessarily changing meaning. A useful system must distinguish harmless register variation from a genuine semantic change, while avoiding conclusions that are merely artifacts of tokenization.
+
+## What was built
+
+- Persian-aware normalization and formal/informal corpus statistics.
+- Subword-fragmentation and token-inflation analysis to quantify the representation cost of informal text.
+- Word2Vec and ParsBERT similarity baselines.
+- Deterministic construction of balanced positive and shuffled-negative sentence pairs.
+- Transformer fine-tuning, held-out evaluation, and reusable formal/informal inference.
+
+## Main takeaways
+
+The project makes the representation gap visible before modelling it: informal writing can inflate tokenization complexity even when semantic content is preserved. Contextual transformer embeddings are therefore evaluated alongside simpler similarity baselines rather than assumed to be necessary by default.
+
+## Reproduce
 
 ```bash
 pip install -e .
 persian-equivalence analyze --data-path trainset_40k_onlySent.xlsx --output-dir outputs/analysis
 persian-equivalence train --data-path trainset_40k_onlySent.xlsx --output-dir outputs/model
-persian-equivalence predict --model-dir outputs/model --formal "..." --informal "..."
 ```
 
-The implementation is divided into `normalization.py`, `tokenization.py`, `word2vec.py`, `embeddings.py`, `pairs.py`, `dataset.py`, `training.py`, `evaluation.py`, and `inference.py`. Expensive model downloads happen only when transformer stages are requested.
-
-## Data contract
-
-The default columns are `formalForm` and `informalForm`; both can be overridden from the CLI. The train command constructs balanced positive and shuffled-negative pairs with deterministic train/validation/test splits.
-
-## Topics
-
-`persian-nlp` `semantic-similarity` `parsbert` `transformers` `word2vec` `text-classification`
+The default data contract uses `formalForm` and `informalForm`, and both columns can be overridden from the CLI. GitHub Actions checks the package independently of model downloads.
