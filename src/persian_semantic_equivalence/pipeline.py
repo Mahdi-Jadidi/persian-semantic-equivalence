@@ -1,8 +1,6 @@
 import json
 from pathlib import Path
 
-import pandas as pd
-
 from .io import load_pairs
 from .tokenization import transformer_statistics, word_statistics
 from .word2vec import pair_similarities, train_word2vec
